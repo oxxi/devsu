@@ -1,0 +1,28 @@
+version: '3.8'
+services:  
+  client-services:
+    build: ./client
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-db
+
+  account-service:
+    build: ./accounts
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+  
+  mysql-db:
+    image: mysql:8.0.32
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: devsu
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
